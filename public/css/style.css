@@ -106,6 +106,7 @@ h1 {
     margin-left: 120px;
     text-decoration: none;
     color: gray;
+    gap: 4px;
     font-size: 18px;
     margin-top:10px;
   }

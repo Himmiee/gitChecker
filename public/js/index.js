@@ -19,9 +19,8 @@ const getUser = () => {
               const repos = response.public_repos;
               const profileUrl = response.html_url;
 
-
               data.innerHTML=`<div class="user">
-              <span class="git" id="uname">${gitName} @<a href=${profileUrl} target="_blank">${gitFull}</a></span>
+              <span class="git" id="uname">${gitName} <a href=${profileUrl} target="_blank">@${gitFull}</a></span>
               <span class="git"><a href=${profileUrl} target="_blank"><img src=${avatar} width=90" height=90" id="avatar"></a></span>
               <div class="sect">
               <p id="info">Followers: ${gitFollowers}  Following: ${gitFollowing}  <br> Repos: ${repos} </p>
