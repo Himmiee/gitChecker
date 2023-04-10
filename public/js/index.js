@@ -6,6 +6,14 @@ const getUser = () => {
     let name = input.value
     const uri   = `https://api.github.com/users/${name}`;
     const reposUri = `https://api.github.com/users/${name}/repos`;
+    const info = input.addEventListener("change", (e) => {
+        e.preventDefault();
+        console.log(e.target.value)
+        btn.addEventListener("click",getUser);
+    })
+    if (!info) {
+        btn.removeEventListener("click", getUser);
+    }
     fetch(uri, {method: "GET"}).then(response => response.json())
     .then( response => {
         if (response.status == "Not Found"  || response.username == "") {
@@ -20,11 +28,11 @@ const getUser = () => {
               const profileUrl = response.html_url;
 
               data.innerHTML=`<div class="user">
-              <span class="git" id="uname">${gitName} <a href=${profileUrl} target="_blank">@${gitFull}</a></span>
+              <span class="git" id="uname">${gitName || "User Not Found"} <a href=${profileUrl} target="_blank">@${gitFull || "Nil"}</a></span>
               <span class="git"><a href=${profileUrl} target="_blank"><img src=${avatar} width=90" height=90" id="avatar"></a></span>
               <div class="sect">
-              <p id="info">Followers: ${gitFollowers}  Following: ${gitFollowing}  <br> Repos: ${repos} </p>
-              <h2>Repos List: </h2>
+              <p id="info">Followers: ${gitFollowers || "0"}  Following: ${gitFollowing || "0"}  <br> Repos: ${repos || "0"} </p>
+              ${repos >= 0  ? "<h2>Repos List: </h2>" : ""}
               </div>
               </div>`
   
@@ -34,7 +42,7 @@ const getUser = () => {
 
         )
 
-        fetch(reposUri, {method: "GET"}).then(response => response.json())
+        fetch(reposUri,{method: "GET"}).then(response => response.json())
         .then(response => {
             if (response.length == 0 ) {
              data.innerHTML=`<h2>No Repos</h2>`
